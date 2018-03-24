@@ -1,0 +1,9 @@
+:show paths      
+:set prompt ""
+
+import Diagrams
+:load Context
+
+g1 <- streamSmartLazer
+
+:set prompt "g-code> "
