@@ -33,5 +33,5 @@ lineto :: V2 Double -> V2 Double -> Stroke
 generate Stroke data from two vectors
 
 ```
-g1 $ map (\m lineto -> (V2 m 1) (V2 1 m)) [0..2]
+g1 $ map (\m -> lineto (V2 m 1) (V2 1 m)) [0..2]
 ```
