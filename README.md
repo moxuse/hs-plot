@@ -1,4 +1,4 @@
-# h-plotter
+# hs-plot
 
 Software for Livecoding to manipulate XY Plotter on ghci repl. providing interface for SmartLaserMini. Using SmartLaserMini modified as XY Plotter which has pen holder.
 
