@@ -15,18 +15,17 @@ smartLaserSlang = GCodeHTTPSlang {
     "\nG0F5000",
     "\nG1F750",
     "\nS77"
-    ],
-   suffix = [
+  ],
+  postScript = [
     "\nM81",
     "\nS0"
   ]
-  }
+}
 
 smartLazerBackend :: IO (GCodeHTTPBackend a)
 smartLazerBackend = do
   s <- makePostFunc "127.0.0.1" 4444 smartLaserSlang
   return $ GCodeHTTPBackend s
-
 
 stateSmartLazer = do
   backend <- smartLazerBackend 
@@ -39,4 +38,3 @@ streamSmartLazer = do
     (c)
     )
   
-

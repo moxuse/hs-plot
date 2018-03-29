@@ -2,24 +2,23 @@
 
 module Stream where
 
-import qualified Data.ByteString.Lazy.Char8 as L8
 import Network
 import Network.HTTP.Client
 import Network.HTTP.Client.MultipartFormData
 import Network.HTTP.Simple (getResponseHeader, getResponseStatusCode)
-import Data.Maybe
-import qualified Data.Map.Strict as Map
 import Diagrams.TwoD.Types
 import Data.ByteString.Char8 as C8 (pack)
 
-data Stroke = S { name :: String, from :: V2 Double, to :: V2 Double } deriving (Show)
+type Trail = (Double, Double)
+
+type Stroke = [Trail]
 
 type PostMessageFunc = [Stroke] -> IO (IO ())
 
 data GCodeHTTPSlang = GCodeHTTPSlang {
   premble :: [String],
-  suffix :: [String]
-  }
+  postScript :: [String]
+}
 
 data GCodeHTTPBackend a = GCodeHTTPBackend {
   postMessage :: PostMessageFunc  
@@ -40,24 +39,19 @@ post s payload = do
 
 
 jobData :: GCodeHTTPSlang -> [String] -> String
-jobData slang jobs = (prembleStr slang) ++ (foldl (++) "" jobs) ++ (suffixStr slang)
+jobData slang jobs = (prembleStr slang) ++ (foldl (++) "" jobs) ++ (postScriptStr slang)
 
 prembleStr sl = (foldl (++) "" (premble sl))
-suffixStr sl = (foldl (++) "" (suffix sl))
+postScriptStr sl = (foldl (++) "" (postScript sl))
 
 toGCode :: Stroke -> String
-toGCode x 
-  | nameOfStroke x == "move" = vecStrOfStroke x False
-  | nameOfStroke x == "line" = vecStrOfStroke x True
-  | otherwise = "\nG0"
+toGCode (x:xs) = (trailStrOfStroke x) ++ (foldl (\ s d -> (trailStrOfStroke' d) ++ s) "" xs)
 
-nameOfStroke x = name x
-vecStrOfStroke x t 
-  | t == True = "\nG0" ++ vecToStr (from x) ++ "\nG1" ++ vecToStr (to x)
-  | t == False = "\nG0" ++ vecToStr (from x)
+trailStrOfStroke x = "\nG1" ++ trailToStr x
+trailStrOfStroke' x = "\nG0" ++ trailToStr x
 
-vecToStr :: V2 Double -> String
-vecToStr v = "X" ++ show (fst (unr2 v)) ++ "Y" ++ show (snd (unr2 v))
+trailToStr :: Trail -> String
+trailToStr v = "X" ++ show (fst v) ++ "Y" ++ show (snd v)
 
 toGCodeMap :: [Stroke] -> [String]
 toGCodeMap m = map (toGCode) m
