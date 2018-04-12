@@ -6,8 +6,8 @@ import Network
 import Network.HTTP.Client
 import Network.HTTP.Client.MultipartFormData
 import Network.HTTP.Simple (getResponseHeader, getResponseStatusCode)
-import Diagrams.TwoD.Types
 import Data.ByteString.Char8 as C8 (pack)
+-- import Diagrams.TwoD.Types
 
 type Trail = (Double, Double)
 
@@ -45,7 +45,7 @@ prembleStr sl = (foldl (++) "" (premble sl))
 postScriptStr sl = (foldl (++) "" (postScript sl))
 
 toGCode :: Stroke -> String
-toGCode (x:xs) = (trailStrOfStroke x) ++ (foldl (\ s d -> (trailStrOfStroke' d) ++ s) "" xs)
+toGCode (x:xs) = (trailStrOfStroke' x) ++ (foldl (\ s d -> (trailStrOfStroke d) ++ s) "" xs)
 
 trailStrOfStroke x = "\nG1" ++ trailToStr x
 trailStrOfStroke' x = "\nG0" ++ trailToStr x
@@ -58,7 +58,7 @@ toGCodeMap m = map (toGCode) m
     
 makePostFunc :: String -> Int -> GCodeHTTPSlang -> IO (PostMessageFunc)
 makePostFunc address port slang = do
-  let s = "POST http://" ++ address  ++ ":" ++ show(port) ++ "/gcode"
+  let s = "POST http://" ++ address ++ ":" ++ show(port) ++ "/gcode"
   return (\ m -> do
     let payload' = jobData slang (toGCodeMap m)
     return $ post s payload'

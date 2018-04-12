@@ -5,9 +5,9 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE TypeFamilies #-}
 
-import Diagrams.Prelude
-import Diagrams.Backend.SVG
-import Diagrams.Backend.SVG.CmdLine
+-- import Diagrams.Prelude
+-- import Diagrams.Backend.SVG
+-- import Diagrams.Backend.SVG.CmdLine
 
 import System.FilePath
 
@@ -15,9 +15,8 @@ import System.FilePath
 
 outputFile = "./preview.svg"
 
-p_size = mkSizeSpec2D (Just (fst limit)) (Just (snd limit))
-
-prev d = do renderSVG outputFile p_size d
+-- p_size = mkSizeSpec2D (Just (fst limit)) (Just (snd limit))
+-- prev d = do renderSVG outputFile p_size d
 
 
 -- stream

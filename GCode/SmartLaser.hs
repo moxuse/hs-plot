@@ -23,13 +23,9 @@ smartLaserSlang = GCodeHTTPSlang {
 }
 
 smartLazerBackend :: IO (GCodeHTTPBackend a)
-smartLazerBackend = do
-  s <- makePostFunc "127.0.0.1" 4444 smartLaserSlang
-  return $ GCodeHTTPBackend s
+smartLazerBackend = GCodeHTTPBackend <$> makePostFunc "127.0.0.1" 4444 smartLaserSlang
 
-stateSmartLazer = do
-  backend <- smartLazerBackend 
-  return (postMessage backend)
+stateSmartLazer = postMessage <$> smartLazerBackend
 
 streamSmartLazer = do
   s <- stateSmartLazer
