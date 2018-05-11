@@ -8,7 +8,7 @@
 import System.FilePath
 :load Context
 
-import Graphics.EasyPlot
+-- import Graphics.EasyPlot
 
 -- stream
 g1 <- streamSmartLazer
@@ -17,10 +17,10 @@ g1 <- streamSmartLazer
 -- if you instaled gnuplot, can previw befour stream.
 
 -- prev :: [Stroke] -> [IO Bool]
-:{
-prev st = do
-  plot (PNG "./preview.png") [Data2D [Style Lines] [] x | x <- st]
-:}
+-- :{
+-- prev st = do
+--   plot (PNG "./preview.png") [Data2D [Style Lines] [] x | x <- st]
+-- :}
 
 
 :set prompt "g-code> "
