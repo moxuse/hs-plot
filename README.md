@@ -10,15 +10,20 @@ Booting repl with script (Boot.ghci) below
 ghci -XOverloadedStrings -ghci-script ./Boot.ghci -i./GCode
 ```
 
-## Stroke data
+## Stroke ant Trail
 
 ```
-Stroke  
- = S {name :: String, from :: V2 Double, to :: V2 Double}
+type Stroke = [Trail]
+
+type Trail = (Double, Double)
 ```
 
+```Trail``` is construct form twe Double values. first is Axis-X and seccond is Y.
 
-## function
+## Plot with Plotter to send GCode to the backend
+
+Use ```stream``` (```g1``` is assigned at first look Boot.ghci) function which has a argument type of ```[Stroke]```, array of Stroke type.
+
 
 ```
 g1 :: [Stroke] -> IO ()
@@ -26,12 +31,36 @@ g1 :: [Stroke] -> IO ()
 
 generate GCodeMap and post g-code to SmartLaser's backend.
 
+## Functions
+
+There are sevaral functions to generate Stroke and modifing shape of them.
+
+### generate
+
 ```
-lineto :: V2 Double -> V2 Double -> Stroke
+generate
 ```
+
+```
+sinX
+```
+
+```
+randomize
+```
+
+### example code
 
 generate Stroke data from two vectors
 
 ```
-g1 $ map (\m -> lineto (V2 m 1) (V2 1 m)) [0..2]
+l = sinX 1.2 $ generate 2
+g1 $ l:[]
 ```
+
+```
+prev $ map (\x -> translate' (x, 3) $ generate 10) [0..3]
+```
+
+
+
