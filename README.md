@@ -31,6 +31,11 @@ g1 :: [Stroke] -> IO ()
 
 generate GCodeMap and post g-code to SmartLaser's backend.
 
+## Preview
+
+You can preview strokes using [gnuplot](http://gnuplot.info) and ```prev``` function.
+in this module, using [easyplot](https://hackage.haskell.org/package/easyplot) library.
+
 ## Functions
 
 There are sevaral functions to generate Stroke and modifing shape of them.
@@ -62,5 +67,5 @@ g1 $ l:[]
 prev $ map (\x -> translate' (x, 3) $ generate 10) [0..3]
 ```
 
-
+preview stroke.
 
