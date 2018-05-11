@@ -5,21 +5,22 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE TypeFamilies #-}
 
--- import Diagrams.Prelude
--- import Diagrams.Backend.SVG
--- import Diagrams.Backend.SVG.CmdLine
-
 import System.FilePath
-
 :load Context
 
-outputFile = "./preview.svg"
-
--- p_size = mkSizeSpec2D (Just (fst limit)) (Just (snd limit))
--- prev d = do renderSVG outputFile p_size d
-
+import Graphics.EasyPlot
 
 -- stream
 g1 <- streamSmartLazer
+
+-- preview
+-- if you instaled gnuplot, can previw befour stream.
+
+-- prev :: [Stroke] -> [IO Bool]
+:{
+prev st = do
+  plot (PNG "./preview.png") [Data2D [Style Lines] [] x | x <- st]
+:}
+
 
 :set prompt "g-code> "

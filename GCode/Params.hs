@@ -1,9 +1,11 @@
-module Params where
+                           module Params where
 
 import System.Random
 import Stream
 import SmartLaser
 -- import Diagrams.TwoD.Types
+
+-- limit
 
 truncateTrail :: Trail -> Trail
 truncateTrail t
@@ -13,25 +15,38 @@ truncateTrail t
   | snd t > snd limit = (fst t, snd limit)
   | otherwise = t
 
-pt t = truncateTrail (truncateTrail t)
+doubleTruncateTrail t = truncateTrail (truncateTrail t)
 
-ptSin :: Double -> Stroke -> Stroke
-ptSin rad xs = map (\ x -> pt ((sin (fst x)) * rad, (sin (snd x)) * rad)) xs
+-- generator
 
-generateX n = map (pt) [(x, 0) | x <- [0..n]]
+generate n = [(x, x - 1) | x <- [0..n]]
 
-generateY n = map (pt) [(0, y) | y <- [0..n]]
+fill n m = [(x, 0) | x <- [0..n], y <- [0..m]]
 
-translate' :: (Double, Double) -> Stroke -> Stroke
-translate' t ls = map (\ l -> pt ((fst l) + (fst t), (snd l) + (snd t))) ls
+-- filter
 
-sinX :: Double -> Stroke -> Stroke
-sinX rad ls = map (\ l -> pt (sin (fst l) * rad, (snd l))) ls
 
-sinY :: Double -> Stroke -> Stroke
-sinY rad ls = map (\ l -> pt ((fst l), sin (snd l) * rad)) ls
 
-randomize :: Double -> Stroke -> Stroke
-randomize fact ls = map (\ l -> pt ((randp 1 fact) + (fst l), (randp (2 + 8) fact) + (snd l) )) ls
+-- modifire
 
-randp s mx = head $ take 1 $ randomRs (0, mx) (mkStdGen s) :: Double
+-- ptSin :: Double -> Stroke -> Stroke
+ptSin rad xs = map (\ x -> (cos (fst x) * rad, (sin (snd x)) * rad)) xs
+
+-- translate' :: (Double, Double) -> Stroke -> Stroke
+translate' t ls = map (\ l -> ((fst l) + (fst t), (snd l) + (snd t))) ls
+
+-- scale' :: (Double, Double) -> Stroke -> Stroke
+scale' t ls = map (\ l -> ((fst l) * (fst t), (snd l) * (snd t))) ls
+
+-- sinX :: Double -> Stroke -> Stroke
+sinX freq ls = map (\ l -> (sin ((fst l) * freq), (snd l))) ls
+
+-- sinY :: Double -> Stroke -> Stroke
+sinY freq ls = map (\ l -> ((fst l), sin ((snd l) * freq))) ls
+
+randomTrail n = do
+  randX <- randomIO
+  randY <- randomIO
+  return (randX * (fst n), randY * (snd n))
+
+randomize ls = mapM (\l -> randomTrail l) ls
