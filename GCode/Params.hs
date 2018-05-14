@@ -41,8 +41,12 @@ scale' t ls = map (\ l -> ((fst l) * (fst t), (snd l) * (snd t))) ls
 -- sinX :: Double -> Stroke -> Stroke
 sinX freq ls = map (\ l -> (sin ((fst l) * freq), (snd l))) ls
 
+cosX freq ls = map (\ l -> (cos ((fst l) * freq), (snd l))) ls
+
 -- sinY :: Double -> Stroke -> Stroke
 sinY freq ls = map (\ l -> ((fst l), sin ((snd l) * freq))) ls
+
+cosY freq ls = map (\ l -> ((fst l), cos ((snd l) * freq))) ls
 
 randomTrail n = do
   randX <- randomIO
