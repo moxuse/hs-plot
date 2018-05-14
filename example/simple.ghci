@@ -1,0 +1,11 @@
+prev $ map (\p-> scale' (2.0, 0.1) $ translate' (0.5*p, 30) $ sinY 0.08 $ sinY (1.1 *(p + 1)) $ sinX (-0.25) $ ptSin 0.63 $ generate 120) [0..9]
+
+p <- mapM (\x-> translate' (4.2 * x, 0.0) <$> (sinX 0.12) <$> (scale' (0.1, 0.1)) <$> (randomize $ translate' (0.1,0.2) $ generate 540)) [0..7];
+prev p
+
+p <- mapM (\x-> translate' (1.5 * x, 0.0) <$> (sinY 1.12) <$> (scale' (0.05, 0.025)) <$> (randomize $ translate' (0.01, 0.01) $ generate 32)) [0..18];
+prev $ map (\t -> (sinY (1.5 - ((fst (head t)) / 10.125)) t)) p
+
+prev $ map (\p-> scale' (200, 60) $ translate' (0.3, 1.1) $ sinX 0.28 $ sinY (2.3 *(p + 1)) $ sinX (1.25) $ ptSin 0.8 $ generate 200) [1]
+
+prev $ map (\p-> scale' (40, 60) $ translate' (0.75 * p + 0.1, 1.1) $ sinX (sin(p) / cos(0.37)) $ sinY (p * 0.86) $ ptSin (1.03 * (p+1)) $ generate 400) [2.9]
