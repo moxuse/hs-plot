@@ -13,7 +13,7 @@ smartLaserSlang = GCodeHTTPSlang {
     "G90", 
     "\nM80",
     "\nG0F5000",
-    "\nG1F750",
+    "\nG1F1200",
     "\nS77"
   ],
   postScript = [
