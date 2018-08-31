@@ -10,7 +10,7 @@ Booting repl with script (Boot.ghci) below
 ghci -XOverloadedStrings -ghci-script ./Boot.ghci -i./GCode
 ```
 
-## Stroke ant Trail
+## Stroke and Trail
 
 ```
 type Stroke = [Trail]
