@@ -6,9 +6,15 @@
 {-# LANGUAGE TypeFamilies #-}
 
 import System.FilePath
+import Data.Array
 :load Context
 
--- import Graphics.EasyPlot
+import Graphics.EasyPlot
+
+import Control.Monad
+import Control.Monad.IO.Class
+import Data.IORef
+import Graphics.UI.Gtk hiding (Action, backspace)
 
 -- stream
 g1 <- streamSmartLazer
@@ -17,10 +23,15 @@ g1 <- streamSmartLazer
 -- if you instaled gnuplot, can previw befour stream.
 
 -- prev :: [Stroke] -> [IO Bool]
--- :{
--- prev st = do
---   plot (PNG "./preview.png") [Data2D [Style Lines] [] x | x <- st]
--- :}
+:{
+prev st = do
+  plot (PNG "./preview.png") [Data2D [Style Lines] [] x | x <- st]
+:}
 
+-- main = do
+--  void initGUI
+--  window <- windowNew
+--  widgetShowAll window
+--  mainGUI
 
 :set prompt "g-code> "

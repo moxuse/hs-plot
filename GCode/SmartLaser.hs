@@ -5,7 +5,7 @@ module SmartLaser where
 import Data.Maybe
 import Stream
 
-limit = (200, 170)
+limit = (199, 169)
 
 smartLaserSlang :: GCodeHTTPSlang 
 smartLaserSlang = GCodeHTTPSlang {
